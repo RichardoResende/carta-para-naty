@@ -30,7 +30,7 @@
       position: absolute;
       color: white;
       opacity: 0.8; /* 80% de opacidade (ou 20% de transparência) */
-      font-size: 20px; /* Tamanho base dos emojis de fundo */
+      font-size: 20px; 
     }
 
     /* Container principal para o conteúdo ficar na frente da decoração */
@@ -39,8 +39,8 @@
       margin: 0 auto;
       padding: 0 1.5em;
       position: relative;
-      background-color: lightpink;
       z-index: 2;
+      /* MUDANÇA: A linha 'background-color' foi removida daqui para que o fundo com emojis fique visível */
     }
 
     img {
@@ -136,7 +136,6 @@
   <div id="overlay-background" onclick="fecharSegredo()"><img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()"></div>
 
   <script>
-    // SCRIPT TOTALMENTE SIMPLIFICADO - SEM GERAÇÃO DE EMOJIS
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
