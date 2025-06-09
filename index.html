@@ -9,29 +9,48 @@
       background-color: lightpink;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
-      padding: 2em 0; /* Apenas padding vertical no body */
+      padding: 2em 0; 
       color: #333;
       position: relative; 
       overflow-x: hidden;
     }
 
-    /* MUDANÇA: Container principal para o conteúdo */
+    /* Container para os emojis de fundo */
+    .decoracao-fundo-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none; /* Garante que os emojis não interfiram com cliques */
+    }
+
+    .fundo-emoji {
+      position: absolute;
+      color: white;
+      opacity: 0.8; /* 80% de opacidade (ou 20% de transparência) */
+      font-size: 20px; /* Tamanho base dos emojis de fundo */
+    }
+
+    /* Container principal para o conteúdo ficar na frente da decoração */
     .main-container {
-      max-width: 650px; /* Largura máxima do conteúdo */
-      margin: 0 auto; /* Centraliza o container */
-      padding: 0 1em; /* Espaçamento interno para telas pequenas */
-      position: relative; /* Contexto para o z-index dos easter eggs */
-      z-index: 2; /* Garante que o conteúdo fique acima do fundo */
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 0 1.5em;
+      position: relative;
+      background-color: lightpink;
+      z-index: 2;
     }
 
     img {
-      width: 100%; /* Imagem ocupa 100% do seu container */
+      width: 100%;
       max-width: 400px;
       border-radius: 20px;
       margin-top: 1em;
     }
     .texto {
-      margin: 2em auto;
+      margin: 1em auto;
       width: 100%;
       font-size: 1.2em;
       text-align: left;
@@ -40,26 +59,18 @@
       color: #aa00aa;
       font-weight: bold;
       cursor: pointer;
-      transition: color 0.3s;
     }
-    #data-secreta:hover {
-      color: #ff1493;
-    }
-    #overlay-background, #overlay-carro, #overlay-oculos, #overlay-coracao {
+    #overlay-background {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-color: rgba(0, 0, 0, 0.7);
       z-index: 10;
       justify-content: center;
       align-items: center;
     }
-    #imagem-secreta, #imagem-carro-secreta, #imagem-oculos-secreta, #imagem-coracao-secreta {
-      width: 80%;
-      max-width: 500px;
+    #imagem-secreta {
+      width: 80%; max-width: 500px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       background-color: white;
@@ -79,34 +90,31 @@
     .music-title {
       font-size: 1.2em; font-weight: bold; color: #333;
     }
-    .decoracao-fundo {
-      position: absolute;
-      color: rgba(255, 255, 255, 0.5);
-      z-index: 1;
-      user-select: none;
-      cursor: default;
-    }
-    .easter-egg {
-      opacity: 0.9 !important;
-      font-size: 2.5em !important;
-      cursor: pointer !important;
-      animation: pulse 2s infinite ease-in-out;
-      z-index: 3; /* Easter eggs ficam acima da decoração, mas abaixo dos overlays */
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
   </style>
 </head>
 <body>
 
-  <div id="decoracao-container"></div>
+  <div class="decoracao-fundo-container">
+    <span class="fundo-emoji" style="top: 5%; left: 10%; transform: rotate(-15deg);">💖</span>
+    <span class="fundo-emoji" style="top: 8%; left: 80%; transform: rotate(20deg);">✈️</span>
+    <span class="fundo-emoji" style="top: 15%; left: 40%; transform: rotate(5deg);">🚗</span>
+    <span class="fundo-emoji" style="top: 25%; left: 90%; transform: rotate(-10deg);">🥤</span>
+    <span class="fundo-emoji" style="top: 28%; left: 20%; transform: rotate(15deg);">🍦</span>
+    <span class="fundo-emoji" style="top: 40%; left: 75%; transform: rotate(-5deg);">💘</span>
+    <span class="fundo-emoji" style="top: 50%; left: 5%; transform: rotate(25deg);">✨</span>
+    <span class="fundo-emoji" style="top: 60%; left: 85%; transform: rotate(-15deg);">💕</span>
+    <span class="fundo-emoji" style="top: 70%; left: 50%; transform: rotate(10deg);">🥰</span>
+    <span class="fundo-emoji" style="top: 85%; left: 15%; transform: rotate(-20deg);">😎</span>
+    <span class="fundo-emoji" style="top: 95%; left: 90%; transform: rotate(8deg);">💖</span>
+    <span class="fundo-emoji" style="top: 20%; left: 60%; transform: rotate(30deg);">✨</span>
+    <span class="fundo-emoji" style="top: 35%; left: 5%; transform: rotate(-12deg);">💘</span>
+    <span class="fundo-emoji" style="top: 55%; left: 65%; transform: rotate(18deg);">🚗</span>
+    <span class="fundo-emoji" style="top: 65%; left: 25%; transform: rotate(-8deg);">✈️</span>
+    <span class="fundo-emoji" style="top: 80%; left: 70%; transform: rotate(22deg);">🍦</span>
+  </div>
   
   <div class="main-container">
     <h1>Feliz Dia dos Namorados, Naty 💘</h1>
-
     <div class="music-player">
       <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
       <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
@@ -124,117 +132,20 @@
     </div>
   </div>
 
-  <audio id="musica-de-fundo" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-  </audio>
-
-  <div id="overlay-background" onclick="fecharSegredo()">
-    <img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()">
-  </div>
-
-  <div id="overlay-carro" onclick="fecharSegredoCarro()">
-    <img id="imagem-carro-secreta" src="viagem.jpg" alt="Surpresa do Carro" onclick="event.stopPropagation()">
-  </div>
-
-  <div id="overlay-oculos" onclick="fecharSegredoOculos()">
-    <img id="imagem-oculos-secreta" src="eu.jpg" alt="Minha Foto" onclick="event.stopPropagation()">
-  </div>
-  
-  <div id="overlay-coracao" onclick="fecharSegredoCoracao()">
-    <img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()">
-  </div>
+  <audio id="musica-de-fundo" loop><source src="musica.mp3" type="audio/mpeg"></audio>
+  <div id="overlay-background" onclick="fecharSegredo()"><img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()"></div>
 
   <script>
+    // SCRIPT TOTALMENTE SIMPLIFICADO - SEM GERAÇÃO DE EMOJIS
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
     const overlay = document.getElementById('overlay-background');
-    const overlayCarro = document.getElementById('overlay-carro');
-    const overlayOculos = document.getElementById('overlay-oculos');
-    const overlayCoracao = document.getElementById('overlay-coracao');
 
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
     function fecharSegredo() { overlay.style.display = 'none'; }
-    function mostrarSegredoCarro() { overlayCarro.style.display = 'flex'; }
-    function fecharSegredoCarro() { overlayCarro.style.display = 'none'; }
-    function mostrarSegredoOculos() { overlayOculos.style.display = 'flex'; }
-    function fecharSegredoOculos() { overlayOculos.style.display = 'none'; }
-    function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
-    function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
-
-    // --- SCRIPT DE DECORAÇÃO (VERSÃO RESPONSIVA) ---
-    window.addEventListener('load', function() {
-      const container = document.getElementById('decoracao-container');
-      const mainContent = document.querySelector('.main-container');
-      
-      const emojis = ['💖', '✈️', '🚗', '🥤', '🍦', '💘', '✨', '💕', '🥰', '😎'];
-      const totalEmojisToPlace = 50;
-      const easterEggConfig = {
-        '🚗': mostrarSegredoCarro, '😎': mostrarSegredoOculos, '💖': mostrarSegredoCoracao
-      };
-      
-      setTimeout(() => {
-        const totalHeight = document.body.scrollHeight;
-        const totalWidth = window.innerWidth;
-        
-        // Define a "zona proibida" no centro da tela onde os emojis não podem cair
-        const contentLeft = mainContent.offsetLeft;
-        const contentRight = mainContent.offsetLeft + mainContent.offsetWidth;
-        const safetyMargin = 30; // Margem de segurança extra
-
-        // Lista para garantir que todos os easter eggs apareçam
-        const easterEggsToPlace = Object.keys(easterEggConfig);
-
-        for (let i = 0; i < totalEmojisToPlace; i++) {
-          let emoji;
-          let isEasterEgg = false;
-          
-          // Garante que os easter eggs sejam colocados primeiro
-          if (i < easterEggsToPlace.length) {
-            emoji = easterEggsToPlace[i];
-            isEasterEgg = true;
-          } else {
-            emoji = emojis[Math.floor(Math.random() * emojis.length)];
-          }
-
-          const emojiSpan = document.createElement('span');
-          emojiSpan.classList.add('decoracao-fundo');
-          emojiSpan.innerText = emoji;
-
-          // Tenta encontrar uma posição válida fora da área de conteúdo
-          let placed = false;
-          let attempts = 0;
-          while(!placed && attempts < 100) {
-            const randomLeft = Math.random() * totalWidth;
-            const randomTop = Math.random() * totalHeight;
-
-            // Condição: SÓ coloca o emoji se ele estiver FORA da área de conteúdo
-            if (randomLeft < contentLeft - safetyMargin || randomLeft > contentRight + safetyMargin) {
-              emojiSpan.style.left = randomLeft + 'px';
-              emojiSpan.style.top = randomTop + 'px';
-              placed = true;
-            }
-            attempts++;
-          }
-
-          // Se encontrou uma posição válida, adiciona o emoji
-          if(placed) {
-            if (isEasterEgg) {
-              emojiSpan.classList.add('easter-egg');
-              emojiSpan.onclick = easterEggConfig[emoji];
-            } else {
-              emojiSpan.style.opacity = Math.random() * 0.4 + 0.2;
-            }
-
-            emojiSpan.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
-            emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 45}deg)`;
-            container.appendChild(emojiSpan);
-          }
-        }
-      }, 100);
-    });
   </script>
 
 </body>
