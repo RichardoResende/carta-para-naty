@@ -19,8 +19,11 @@
       margin: 0 auto;
       padding: 0 1.5em;
       position: relative;
-      background-color: transparent; /* Fundo transparente para ver os emojis atrás */
+      background-color: transparent;
       z-index: 2;
+    }
+    h1 {
+      position: relative; /* Necessário para posicionar o coração dentro dele */
     }
     img {
       width: 100%;
@@ -39,7 +42,6 @@
       font-weight: bold;
       cursor: pointer;
     }
-    /* Estilo para todos os pop-ups */
     #overlay-background, #overlay-carro, #overlay-oculos, #overlay-coracao {
       display: none;
       position: fixed;
@@ -70,8 +72,7 @@
     .music-title {
       font-size: 1.2em; font-weight: bold; color: #333;
     }
-
-    /* Estilos para a decoração */
+    
     .decoracao-fundo-container {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -81,32 +82,32 @@
     .fundo-emoji {
       position: absolute;
       color: white;
-      opacity: 0.8; /* 20% de transparência */
+      opacity: 0.8;
       font-size: 20px;
     }
     .espaco-easter-egg {
       position: relative;
       width: 100%;
-      height: 70px;
+      height: 40px; /* Altura menor para o espaço entre os parágrafos */
       margin: 0.5em 0;
     }
     .easter-egg {
       position: absolute;
       color: white;
-      opacity: 0.8; /* Mesma aparência dos outros */
-      font-size: 2.5em; /* Um pouco maior para ser notado */
+      opacity: 0.9; /* Um pouco mais visível que o fundo */
+      font-size: 22px; /* MUDANÇA: Tamanho ajustado */
       cursor: pointer;
       z-index: 3;
       animation: pulsar 2.5s infinite ease-in-out;
     }
     @keyframes pulsar {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
+      50% { transform: scale(1.2); } /* Pulso um pouco mais sutil */
     }
   </style>
 </head>
 <body>
-
+  
   <div class="decoracao-fundo-container">
     <span class="fundo-emoji" style="top: 5%; left: 10%; transform: rotate(-15deg);">✈️</span>
     <span class="fundo-emoji" style="top: 8%; left: 80%; transform: rotate(20deg);">✨</span>
@@ -122,29 +123,32 @@
   </div>
   
   <div class="main-container">
-    <h1>Feliz Dia dos Namorados, Naty 💘</h1>
+    <h1>Feliz Dia <span class="easter-egg" style="top: -15px; left: 49%;" onclick="mostrarSegredoCoracao()">💖</span> dos Namorados, Naty 💘</h1>
     <div class="music-player">
       <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
       <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
       <span class="music-title">Só me ligar</span>
     </div>
 
-    <div class="espaco-easter-egg">
-      <span class="easter-egg" style="top: 15%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
-    </div>
     <img src="foto1.jpg" alt="Foto do casal">
-    <div class="espaco-easter-egg">
-       <span class="easter-egg" style="top: 25%; left: 15%;" onclick="mostrarSegredoCarro()">🚗</span>
-       <span class="easter-egg" style="top: 25%; right: 15%;" onclick="mostrarSegredoOculos()">😎</span>
-    </div>
 
     <div class="texto">
       <p>Olha, não sou tão bom com cartas como você, mas pelo menos no computador acho que desenrolo o suficiente pra te fazer isso.</p>
       <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
+      
+      <div class="espaco-easter-egg">
+        <span class="easter-egg" style="top: 50%; right: -10px; transform: translateY(-50%);" onclick="mostrarSegredoCarro()">🚗</span>
+      </div>
+
       <p>É nosso segundo dias dos namorados junto, só que esse é diferente... é especial pra mim, dessa vez sem preocupações, apenas curtir essa data especial da gente.</p>
       <p>Jájá faz um ano né desde daquele dia, <span id="data-secreta" onclick="revelarSegredo()">11/06/2024</span>, lembra desse dia, espero que sim, o dia que tudo mudou, o que será que seria da gnt se não fosse aquele dia, de toda forma, gosto da realidade que vivemos, gosto de você, eu te amo e saiba</p>
       <p>Você é insubstituível meu amor. 💖</p>
     </div>
+
+    <div class="espaco-easter-egg">
+      <span class="easter-egg" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="mostrarSegredoOculos()">😎</span>
+    </div>
+
   </div>
 
   <audio id="musica-de-fundo" loop><source src="musica.mp3" type="audio/mpeg"></audio>
@@ -154,7 +158,6 @@
   <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
-    // MUDANÇA: Variáveis e funções para os easter eggs adicionadas de volta, na ordem correta
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
