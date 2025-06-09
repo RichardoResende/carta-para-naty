@@ -11,17 +11,11 @@
       text-align: center;
       padding: 2em 0; 
       color: #333;
-      position: relative; 
-      overflow-x: hidden;
     }
-    /* Container principal para o conteúdo */
     .main-container {
       max-width: 650px;
       margin: 0 auto;
-      padding: 0 1em;
-      position: relative;
-      background-color: lightpink; /* Garante que emojis não apareçam por trás do texto */
-      z-index: 2;
+      padding: 0 1.5em; /* Aumenta o espaçamento lateral no celular */
     }
     img {
       width: 100%;
@@ -30,7 +24,7 @@
       margin-top: 1em;
     }
     .texto {
-      margin: 2em auto;
+      margin: 1em auto;
       width: 100%;
       font-size: 1.2em;
       text-align: left;
@@ -78,19 +72,26 @@
     .music-title {
       font-size: 1.2em; font-weight: bold; color: #333;
     }
-    .decoracao-fundo {
+    
+    /* MUDANÇA: Estilos para as "faixas" de decoração */
+    .espaco-decoracao {
+      position: relative;
+      width: 100%;
+      height: 60px; /* Altura da faixa de decoração */
+      margin: 1em 0;
+    }
+    .decoracao-emoji {
       position: absolute;
-      color: rgba(255, 255, 255, 0.5);
-      z-index: 1;
+      opacity: 0.8; /* Opacidade alta, como pedido */
+      color: white;
       user-select: none;
-      cursor: default;
     }
     .easter-egg {
-      opacity: 0.9 !important;
+      opacity: 1 !important;
       font-size: 2.5em !important;
       cursor: pointer !important;
       animation: pulse 2s infinite ease-in-out;
-      z-index: 3; /* Easter eggs ficam acima do conteúdo */
+      z-index: 3;
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -100,17 +101,22 @@
   </style>
 </head>
 <body>
-
-  <div id="decoracao-container"></div>
   
   <div class="main-container">
     <h1>Feliz Dia dos Namorados, Naty 💘</h1>
+
     <div class="music-player">
       <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
       <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
       <span class="music-title">Só me ligar</span>
     </div>
+
+    <div class="espaco-decoracao"></div>
+
     <img src="foto1.jpg" alt="Foto do casal">
+
+    <div class="espaco-decoracao"></div>
+
     <div class="texto">
       <p>Olha, não sou tão bom com cartas como você, mas pelo menos no computador acho que desenrolo o suficiente pra te fazer isso.</p>
       <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
@@ -118,6 +124,8 @@
       <p>Jájá faz um ano né desde daquele dia, <span id="data-secreta" onclick="revelarSegredo()">11/06/2024</span>, lembra desse dia, espero que sim, o dia que tudo mudou, o que será que seria da gnt se não fosse aquele dia, de toda forma, gosto da realidade que vivemos, gosto de você, eu te amo e saiba</p>
       <p>Você é insubstituível meu amor. 💖</p>
     </div>
+    
+    <div class="espaco-decoracao"></div>
   </div>
 
   <audio id="musica-de-fundo" loop><source src="musica.mp3" type="audio/mpeg"></audio>
@@ -127,7 +135,6 @@
   <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
-    // --- Funções de controle, sem alterações ---
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -146,71 +153,45 @@
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
 
-    // --- SCRIPT DE DECORAÇÃO (VERSÃO FINAL E RESPONSIVA) ---
+    // --- SCRIPT DE DECORAÇÃO (VERSÃO MOBILE-FIRST) ---
     window.addEventListener('load', function() {
-      const container = document.getElementById('decoracao-container');
-      const mainContent = document.querySelector('.main-container');
-      if (!mainContent) return;
-      
+      const espacosDecoracao = document.querySelectorAll('.espaco-decoracao');
+      if (espacosDecoracao.length === 0) return;
+
       const emojis = ['💖', '✈️', '🚗', '🥤', '🍦', '💘', '✨', '💕', '🥰', '😎'];
-      const totalEmojisToPlace = 50;
       const easterEggConfig = { '🚗': mostrarSegredoCarro, '😎': mostrarSegredoOculos, '💖': mostrarSegredoCoracao };
-      
-      setTimeout(() => {
-        const contentRect = mainContent.getBoundingClientRect();
-        const contentLeft = contentRect.left;
-        const contentRight = contentRect.right;
-        const pageHeight = document.body.scrollHeight;
-        const safetyMargin = 20; // Aumentei a margem de segurança
+      const easterEggsParaColocar = Object.keys(easterEggConfig);
 
-        let easterEggsPlaced = {};
+      // Distribui os 3 easter eggs, um em cada faixa de decoração
+      espacosDecoracao.forEach((espaco, index) => {
+        if (easterEggsParaColocar[index]) {
+            const emoji = easterEggsParaColocar[index];
+            const emojiSpan = document.createElement('span');
+            emojiSpan.classList.add('decoracao-emoji', 'easter-egg');
+            emojiSpan.innerText = emoji;
+            emojiSpan.onclick = easterEggConfig[emoji];
+            
+            emojiSpan.style.left = (Math.random() * 70 + 15) + '%'; // Posição X aleatória (evitando as bordas)
+            emojiSpan.style.top = (Math.random() * 50) + '%';   // Posição Y aleatória
+            emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 30}deg)`;
+            espaco.appendChild(emojiSpan);
+        }
 
-        for (let i = 0; i < totalEmojisToPlace; i++) {
-          let emoji;
-          let isEasterEgg = false;
-          
-          const availableEasterEggs = Object.keys(easterEggConfig).filter(e => !easterEggsPlaced[e]);
-          if (availableEasterEggs.length > 0) {
-            emoji = availableEasterEggs[0];
-            isEasterEgg = true;
-          } else {
-            emoji = emojis[Math.floor(Math.random() * emojis.length)];
-          }
+        // Coloca mais alguns emojis normais em cada faixa
+        const numEmojisNormais = 5;
+        for(let i=0; i < numEmojisNormais; i++) {
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            const emojiSpan = document.createElement('span');
+            emojiSpan.classList.add('decoracao-emoji');
+            emojiSpan.innerText = emoji;
 
-          const emojiSpan = document.createElement('span');
-          emojiSpan.classList.add('decoracao-fundo');
-          emojiSpan.innerText = emoji;
-          
-          let placed = false;
-          let attempts = 0;
-          while(!placed && attempts < 100) {
-            let randomLeft = Math.random() * window.innerWidth;
-            let randomTop = Math.random() * pageHeight;
-
-            // Condição: SÓ coloca o emoji se ele estiver FORA da área de conteúdo
-            if (randomLeft < contentLeft - safetyMargin || randomLeft > contentRight + safetyMargin) {
-              emojiSpan.style.left = randomLeft + 'px';
-              emojiSpan.style.top = randomTop + 'px';
-              placed = true;
-            }
-            attempts++;
-          }
-          
-          if(placed) {
-            if (isEasterEgg) {
-              emojiSpan.classList.add('easter-egg');
-              emojiSpan.onclick = easterEggConfig[emoji];
-              easterEggsPlaced[emoji] = true;
-            } else {
-              emojiSpan.style.opacity = Math.random() * 0.4 + 0.2;
-            }
-
+            emojiSpan.style.left = (Math.random() * 90 + 5) + '%';
+            emojiSpan.style.top = (Math.random() * 60) + '%';
             emojiSpan.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
             emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 45}deg)`;
-            container.appendChild(emojiSpan);
-          }
+            espaco.appendChild(emojiSpan);
         }
-      }, 100);
+      });
     });
   </script>
 
