@@ -17,7 +17,7 @@
     .main-container {
       max-width: 650px;
       margin: 0 auto;
-      padding: 0 1em;
+      padding: 0 1.5em;
       position: relative;
       background-color: lightpink;
       z-index: 2;
@@ -38,26 +38,18 @@
       color: #aa00aa;
       font-weight: bold;
       cursor: pointer;
-      transition: color 0.3s;
-    }
-    #data-secreta:hover {
-      color: #ff1493;
     }
     #overlay-background, #overlay-carro, #overlay-oculos, #overlay-coracao {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-color: rgba(0, 0, 0, 0.7);
       z-index: 10;
       justify-content: center;
       align-items: center;
     }
     #imagem-secreta, #imagem-carro-secreta, #imagem-oculos-secreta, #imagem-coracao-secreta {
-      width: 80%;
-      max-width: 500px;
+      width: 80%; max-width: 500px;
       border-radius: 10px;
       box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
       background-color: white;
@@ -78,6 +70,20 @@
       font-size: 1.2em; font-weight: bold; color: #333;
     }
     
+    /* MUDANÇA: Nova abordagem 100% CSS para decoração */
+    .decoracao-fundo-container {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none; /* Garante que os emojis de fundo não interfiram com cliques */
+    }
+    .fundo-emoji {
+      position: absolute;
+      color: white;
+      opacity: 0.8; /* Opacidade alta como pedido */
+    }
     .espaco-easter-egg {
       position: relative;
       width: 100%;
@@ -86,35 +92,29 @@
     }
     .easter-egg {
       position: absolute;
-      opacity: 1 !important;
       font-size: 2.5em !important;
       cursor: pointer !important;
       animation: pulsar 2s infinite ease-in-out;
       z-index: 3;
+      pointer-events: auto; /* Permite que os easter eggs sejam clicáveis */
     }
-    
-    .decoracao-fundo {
-      position: absolute;
-      color: white;
-      opacity: 0.8;
-      z-index: 1;
-      user-select: none;
-      animation: flutuar 10s ease-in-out infinite;
-    }
-
     @keyframes pulsar {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.1); }
     }
-    @keyframes flutuar {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
-    }
   </style>
 </head>
 <body>
-  
-  <div id="decoracao-fundo-container"></div>
+
+  <div class="decoracao-fundo-container">
+      <span class="fundo-emoji" style="top: 10%; left: 5%; font-size: 2em; transform: rotate(-15deg);">✈️</span>
+      <span class="fundo-emoji" style="top: 15%; right: 10%; font-size: 1.5em; transform: rotate(20deg);">✨</span>
+      <span class="fundo-emoji" style="top: 30%; left: 12%; font-size: 2.2em; transform: rotate(10deg);">💕</span>
+      <span class="fundo-emoji" style="top: 45%; right: 5%; font-size: 1.8em; transform: rotate(-25deg);">🍦</span>
+      <span class="fundo-emoji" style="top: 60%; left: 8%; font-size: 2.5em; transform: rotate(5deg);">💘</span>
+      <span class="fundo-emoji" style="top: 75%; right: 12%; font-size: 1.7em; transform: rotate(15deg);">🥤</span>
+      <span class="fundo-emoji" style="top: 90%; left: 15%; font-size: 2.1em; transform: rotate(-5deg);">🥰</span>
+      </div>
   
   <div class="main-container">
     <h1>Feliz Dia dos Namorados, Naty 💘</h1>
@@ -127,9 +127,7 @@
     <div class="espaco-easter-egg">
       <span class="easter-egg" style="top: 15%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
     </div>
-
     <img src="foto1.jpg" alt="Foto do casal">
-
     <div class="espaco-easter-egg">
        <span class="easter-egg" style="top: 25%; left: 15%;" onclick="mostrarSegredoCarro()">🚗</span>
        <span class="easter-egg" style="top: 25%; right: 15%;" onclick="mostrarSegredoOculos()">😎</span>
@@ -151,7 +149,7 @@
   <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
-    // --- MUDANÇA CRÍTICA: Variáveis declaradas ANTES das funções que as usam ---
+    // MUDANÇA: SCRIPT TOTALMENTE SIMPLIFICADO. SEM GERAÇÃO DE EMOJIS.
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -163,4 +161,14 @@
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
-    function fecharSegredo() { overlay
+    function fecharSegredo() { overlay.style.display = 'none'; }
+    function mostrarSegredoCarro() { overlayCarro.style.display = 'flex'; }
+    function fecharSegredoCarro() { overlayCarro.style.display = 'none'; }
+    function mostrarSegredoOculos() { overlayOculos.style.display = 'flex'; }
+    function fecharSegredoOculos() { overlayOculos.style.display = 'none'; }
+    function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
+    function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
+  </script>
+
+</body>
+</html>
