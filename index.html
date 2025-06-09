@@ -11,13 +11,14 @@
       text-align: center;
       padding: 2em 0; 
       color: #333;
+      position: relative; 
       overflow-x: hidden;
     }
     .main-container {
       max-width: 650px;
       margin: 0 auto;
       padding: 0 1.5em;
-      background-color: lightpink;
+      background-color: lightpink; 
       position: relative;
       z-index: 2;
     }
@@ -77,38 +78,45 @@
       font-size: 1.2em; font-weight: bold; color: #333;
     }
     
-    /* MUDANÇA: NOVA LÓGICA DE DECORAÇÃO COM CSS */
-    .espaco-decoracao {
+    /* Faixas para os easter eggs */
+    .espaco-easter-egg {
       position: relative;
       width: 100%;
       height: 70px;
       margin: 0.5em 0;
     }
-    .deco-emoji {
-      position: absolute;
-      color: white;
-      opacity: 0.8;
-      user-select: none;
-      animation: flutuar 8s ease-in-out infinite;
-    }
     .easter-egg {
+      position: absolute;
       opacity: 1 !important;
+      font-size: 2.5em !important;
       cursor: pointer !important;
       animation: pulsar 2s infinite ease-in-out;
       z-index: 3;
     }
-    @keyframes flutuar {
-      0%, 100% { transform: translateY(0) rotate(var(--r-start)); }
-      50% { transform: translateY(10px) rotate(var(--r-end)); }
+    
+    /* Decoração de fundo (não clicável) */
+    .decoracao-fundo {
+      position: absolute;
+      color: white;
+      opacity: 0.8; /* Opacidade alta (20% de transparência) */
+      z-index: 1;
+      user-select: none;
+      animation: flutuar 10s ease-in-out infinite;
     }
+
     @keyframes pulsar {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.1); }
     }
-
+    @keyframes flutuar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
   </style>
 </head>
 <body>
+  
+  <div id="decoracao-fundo-container"></div>
   
   <div class="main-container">
     <h1>Feliz Dia dos Namorados, Naty 💘</h1>
@@ -118,18 +126,14 @@
       <span class="music-title">Só me ligar</span>
     </div>
 
-    <div class="espaco-decoracao">
-      <span class="deco-emoji easter-egg" style="top: 15%; left: 50%; font-size: 2.5em;" onclick="mostrarSegredoCoracao()">💖</span>
-      <span class="deco-emoji" style="top: 20%; left: 10%; font-size: 1.5em; animation-delay: -2s; --r-start: -10deg; --r-end: 10deg;">✨</span>
-      <span class="deco-emoji" style="top: 40%; left: 85%; font-size: 1.8em; animation-delay: -4s; --r-start: 15deg; --r-end: -5deg;">💕</span>
+    <div class="espaco-easter-egg">
+      <span class="easter-egg" style="top: 20%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
     </div>
 
     <img src="foto1.jpg" alt="Foto do casal">
 
-    <div class="espaco-decoracao">
-       <span class="deco-emoji easter-egg" style="top: 25%; left: 15%; font-size: 2.5em;" onclick="mostrarSegredoCarro()">🚗</span>
-       <span class="deco-emoji" style="top: 10%; left: 80%; font-size: 2em; animation-delay: -1s; --r-start: 5deg; --r-end: -15deg;">✈️</span>
-       <span class="deco-emoji" style="top: 50%; left: 50%; font-size: 1.2em; animation-delay: -5s; --r-start: 20deg; --r-end: 0deg;">🍦</span>
+    <div class="espaco-easter-egg">
+       <span class="easter-egg" style="top: 25%; left: 15%;" onclick="mostrarSegredoCarro()">🚗</span>
     </div>
 
     <div class="texto">
@@ -140,10 +144,8 @@
       <p>Você é insubstituível meu amor. 💖</p>
     </div>
     
-    <div class="espaco-decoracao">
-        <span class="deco-emoji easter-egg" style="top: 20%; left: 80%; font-size: 2.5em;" onclick="mostrarSegredoOculos()">😎</span>
-        <span class="deco-emoji" style="top: 45%; left: 20%; font-size: 1.7em; animation-delay: -3s; --r-start: -5deg; --r-end: 15deg;">🥤</span>
-        <span class="deco-emoji" style="top: 15%; left: 50%; font-size: 2.2em; animation-delay: -6s; --r-start: 0deg; --r-end: -10deg;">💘</span>
+    <div class="espaco-easter-egg">
+        <span class="easter-egg" style="top: 20%; left: 85%;" onclick="mostrarSegredoOculos()">😎</span>
     </div>
   </div>
 
@@ -154,8 +156,7 @@
   <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
-    // MUDANÇA: O SCRIPT DE GERAÇÃO DE EMOJIS FOI COMPLETAMENTE REMOVIDO.
-    // As funções abaixo apenas controlam os pop-ups e o player de música.
+    // --- Funções de controle, sem alterações ---
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -173,7 +174,17 @@
     function fecharSegredoOculos() { overlayOculos.style.display = 'none'; }
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
-  </script>
 
-</body>
-</html>
+    // --- SCRIPT DE DECORAÇÃO DE FUNDO (não clicáveis) ---
+    window.addEventListener('load', function() {
+      const container = document.getElementById('decoracao-fundo-container');
+      if (!container) return;
+      
+      const emojis = ['✈️', '🥤', '🍦', '💘', '✨', '💕', '🥰']; // Apenas os não clicáveis
+      const totalEmojis = 40;
+      const gridSize = 150;
+
+      setTimeout(() => {
+        const pageHeight = document.body.scrollHeight;
+        const pageWidth = window.innerWidth;
+        const numCols = Math.floor
