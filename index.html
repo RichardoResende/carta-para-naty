@@ -1,7 +1,150 @@
-<script>
-    alert('SCRIPT INICIADO');
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carta para Naty 💖</title>
+  <style>
+    body {
+      background-color: lightpink;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      padding: 2em 0; /* Apenas padding vertical no body */
+      color: #333;
+      position: relative; 
+      overflow-x: hidden;
+    }
 
-    // --- Declaração de Variáveis ---
+    /* MUDANÇA: Container principal para o conteúdo */
+    .main-container {
+      max-width: 650px; /* Largura máxima do conteúdo */
+      margin: 0 auto; /* Centraliza o container */
+      padding: 0 1em; /* Espaçamento interno para telas pequenas */
+      position: relative; /* Contexto para o z-index dos easter eggs */
+      z-index: 2; /* Garante que o conteúdo fique acima do fundo */
+    }
+
+    img {
+      width: 100%; /* Imagem ocupa 100% do seu container */
+      max-width: 400px;
+      border-radius: 20px;
+      margin-top: 1em;
+    }
+    .texto {
+      margin: 2em auto;
+      width: 100%;
+      font-size: 1.2em;
+      text-align: left;
+    }
+    #data-secreta {
+      color: #aa00aa;
+      font-weight: bold;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+    #data-secreta:hover {
+      color: #ff1493;
+    }
+    #overlay-background, #overlay-carro, #overlay-oculos, #overlay-coracao {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 10;
+      justify-content: center;
+      align-items: center;
+    }
+    #imagem-secreta, #imagem-carro-secreta, #imagem-oculos-secreta, #imagem-coracao-secreta {
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      background-color: white;
+      padding: 15px;
+    }
+    .music-player {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      margin-top: 1.5em;
+      margin-bottom: 1em;
+    }
+    .music-control {
+      background: none; border: none; font-size: 2.5em; cursor: pointer; padding: 0; line-height: 1;
+    }
+    .music-title {
+      font-size: 1.2em; font-weight: bold; color: #333;
+    }
+    .decoracao-fundo {
+      position: absolute;
+      color: rgba(255, 255, 255, 0.5);
+      z-index: 1;
+      user-select: none;
+      cursor: default;
+    }
+    .easter-egg {
+      opacity: 0.9 !important;
+      font-size: 2.5em !important;
+      cursor: pointer !important;
+      animation: pulse 2s infinite ease-in-out;
+      z-index: 3; /* Easter eggs ficam acima da decoração, mas abaixo dos overlays */
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="decoracao-container"></div>
+  
+  <div class="main-container">
+    <h1>Feliz Dia dos Namorados, Naty 💘</h1>
+
+    <div class="music-player">
+      <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
+      <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
+      <span class="music-title">Só me ligar</span>
+    </div>
+
+    <img src="foto1.jpg" alt="Foto do casal">
+
+    <div class="texto">
+      <p>Olha, não sou tão bom com cartas como você, mas pelo menos no computador acho que desenrolo o suficiente pra te fazer isso.</p>
+      <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
+      <p>É nosso segundo dias dos namorados junto, só que esse é diferente... é especial pra mim, dessa vez sem preocupações, apenas curtir essa data especial da gente.</p>
+      <p>Jájá faz um ano né desde daquele dia, <span id="data-secreta" onclick="revelarSegredo()">11/06/2024</span>, lembra desse dia, espero que sim, o dia que tudo mudou, o que será que seria da gnt se não fosse aquele dia, de toda forma, gosto da realidade que vivemos, gosto de você, eu te amo e saiba</p>
+      <p>Você é insubstituível meu amor. 💖</p>
+    </div>
+  </div>
+
+  <audio id="musica-de-fundo" loop>
+    <source src="musica.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="overlay-background" onclick="fecharSegredo()">
+    <img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()">
+  </div>
+
+  <div id="overlay-carro" onclick="fecharSegredoCarro()">
+    <img id="imagem-carro-secreta" src="viagem.jpg" alt="Surpresa do Carro" onclick="event.stopPropagation()">
+  </div>
+
+  <div id="overlay-oculos" onclick="fecharSegredoOculos()">
+    <img id="imagem-oculos-secreta" src="eu.jpg" alt="Minha Foto" onclick="event.stopPropagation()">
+  </div>
+  
+  <div id="overlay-coracao" onclick="fecharSegredoCoracao()">
+    <img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()">
+  </div>
+
+  <script>
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -9,10 +152,7 @@
     const overlayCarro = document.getElementById('overlay-carro');
     const overlayOculos = document.getElementById('overlay-oculos');
     const overlayCoracao = document.getElementById('overlay-coracao');
-    
-    alert('VARIÁVEIS DECLARADAS');
 
-    // --- Definição das Funções ---
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
@@ -24,41 +164,78 @@
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
 
-    alert('FUNÇÕES DEFINIDAS');
-
-    // --- Script de Decoração ---
+    // --- SCRIPT DE DECORAÇÃO (VERSÃO RESPONSIVA) ---
     window.addEventListener('load', function() {
-      alert('EVENTO "LOAD" DA PÁGINA DISPARADO');
+      const container = document.getElementById('decoracao-container');
+      const mainContent = document.querySelector('.main-container');
       
-      const container = document.getElementById('decoracao-fundo-container');
-      if (!container) {
-          alert('ERRO: Container da decoração não encontrado!');
-          return;
-      }
+      const emojis = ['💖', '✈️', '🚗', '🥤', '🍦', '💘', '✨', '💕', '🥰', '😎'];
+      const totalEmojisToPlace = 50;
+      const easterEggConfig = {
+        '🚗': mostrarSegredoCarro, '😎': mostrarSegredoOculos, '💖': mostrarSegredoCoracao
+      };
       
-      const emojis = ['✈️', '🥤', '🍦', '💘', '✨', '💕', '🥰']; 
-      const totalEmojis = 40;
-
-      alert('INICIANDO CRIAÇÃO DOS EMOJIS DE FUNDO');
-
       setTimeout(() => {
-        alert('DENTRO DO SETTIMEOUT - VAI COMEÇAR A GERAR');
-        const pageHeight = document.body.scrollHeight;
-        const pageWidth = window.innerWidth;
-        for (let i = 0; i < totalEmojis; i++) {
+        const totalHeight = document.body.scrollHeight;
+        const totalWidth = window.innerWidth;
+        
+        // Define a "zona proibida" no centro da tela onde os emojis não podem cair
+        const contentLeft = mainContent.offsetLeft;
+        const contentRight = mainContent.offsetLeft + mainContent.offsetWidth;
+        const safetyMargin = 30; // Margem de segurança extra
+
+        // Lista para garantir que todos os easter eggs apareçam
+        const easterEggsToPlace = Object.keys(easterEggConfig);
+
+        for (let i = 0; i < totalEmojisToPlace; i++) {
+          let emoji;
+          let isEasterEgg = false;
+          
+          // Garante que os easter eggs sejam colocados primeiro
+          if (i < easterEggsToPlace.length) {
+            emoji = easterEggsToPlace[i];
+            isEasterEgg = true;
+          } else {
+            emoji = emojis[Math.floor(Math.random() * emojis.length)];
+          }
+
           const emojiSpan = document.createElement('span');
           emojiSpan.classList.add('decoracao-fundo');
-          emojiSpan.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-          
-          emojiSpan.style.top = (Math.random() * pageHeight) + 'px';
-          emojiSpan.style.left = (Math.random() * pageWidth) + 'px';
-          emojiSpan.style.fontSize = (Math.random() * 1.5 + 0.8) + 'em';
-          emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 60}deg)`;
-          emojiSpan.style.animationDelay = (Math.random() * -10) + 's';
-          
-          container.appendChild(emojiSpan);
+          emojiSpan.innerText = emoji;
+
+          // Tenta encontrar uma posição válida fora da área de conteúdo
+          let placed = false;
+          let attempts = 0;
+          while(!placed && attempts < 100) {
+            const randomLeft = Math.random() * totalWidth;
+            const randomTop = Math.random() * totalHeight;
+
+            // Condição: SÓ coloca o emoji se ele estiver FORA da área de conteúdo
+            if (randomLeft < contentLeft - safetyMargin || randomLeft > contentRight + safetyMargin) {
+              emojiSpan.style.left = randomLeft + 'px';
+              emojiSpan.style.top = randomTop + 'px';
+              placed = true;
+            }
+            attempts++;
+          }
+
+          // Se encontrou uma posição válida, adiciona o emoji
+          if(placed) {
+            if (isEasterEgg) {
+              emojiSpan.classList.add('easter-egg');
+              emojiSpan.onclick = easterEggConfig[emoji];
+            } else {
+              emojiSpan.style.opacity = Math.random() * 0.4 + 0.2;
+            }
+
+            emojiSpan.style.fontSize = (Math.random() * 1.5 + 1) + 'em';
+            emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 45}deg)`;
+            container.appendChild(emojiSpan);
+          }
         }
-        alert('SCRIPT FINALIZADO COM SUCESSO!');
       }, 100);
     });
   </script>
+
+</body>
+</html>
