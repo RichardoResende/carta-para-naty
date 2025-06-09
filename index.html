@@ -17,9 +17,9 @@
     .main-container {
       max-width: 650px;
       margin: 0 auto;
-      padding: 0 1.5em;
-      background-color: lightpink; 
+      padding: 0 1em;
       position: relative;
+      background-color: lightpink;
       z-index: 2;
     }
     img {
@@ -78,7 +78,6 @@
       font-size: 1.2em; font-weight: bold; color: #333;
     }
     
-    /* Faixas para os easter eggs */
     .espaco-easter-egg {
       position: relative;
       width: 100%;
@@ -94,11 +93,10 @@
       z-index: 3;
     }
     
-    /* Decoração de fundo (não clicável) */
     .decoracao-fundo {
       position: absolute;
       color: white;
-      opacity: 0.8; /* Opacidade alta (20% de transparência) */
+      opacity: 0.8;
       z-index: 1;
       user-select: none;
       animation: flutuar 10s ease-in-out infinite;
@@ -127,13 +125,14 @@
     </div>
 
     <div class="espaco-easter-egg">
-      <span class="easter-egg" style="top: 20%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
+      <span class="easter-egg" style="top: 15%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
     </div>
 
     <img src="foto1.jpg" alt="Foto do casal">
 
     <div class="espaco-easter-egg">
        <span class="easter-egg" style="top: 25%; left: 15%;" onclick="mostrarSegredoCarro()">🚗</span>
+       <span class="easter-egg" style="top: 25%; right: 15%;" onclick="mostrarSegredoOculos()">😎</span>
     </div>
 
     <div class="texto">
@@ -142,10 +141,6 @@
       <p>É nosso segundo dias dos namorados junto, só que esse é diferente... é especial pra mim, dessa vez sem preocupações, apenas curtir essa data especial da gente.</p>
       <p>Jájá faz um ano né desde daquele dia, <span id="data-secreta" onclick="revelarSegredo()">11/06/2024</span>, lembra desse dia, espero que sim, o dia que tudo mudou, o que será que seria da gnt se não fosse aquele dia, de toda forma, gosto da realidade que vivemos, gosto de você, eu te amo e saiba</p>
       <p>Você é insubstituível meu amor. 💖</p>
-    </div>
-    
-    <div class="espaco-easter-egg">
-        <span class="easter-egg" style="top: 20%; left: 85%;" onclick="mostrarSegredoOculos()">😎</span>
     </div>
   </div>
 
@@ -156,7 +151,7 @@
   <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
-    // --- Funções de controle, sem alterações ---
+    // --- MUDANÇA CRÍTICA: Variáveis declaradas ANTES das funções que as usam ---
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -164,27 +159,8 @@
     const overlayCarro = document.getElementById('overlay-carro');
     const overlayOculos = document.getElementById('overlay-oculos');
     const overlayCoracao = document.getElementById('overlay-coracao');
+
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
-    function fecharSegredo() { overlay.style.display = 'none'; }
-    function mostrarSegredoCarro() { overlayCarro.style.display = 'flex'; }
-    function fecharSegredoCarro() { overlayCarro.style.display = 'none'; }
-    function mostrarSegredoOculos() { overlayOculos.style.display = 'flex'; }
-    function fecharSegredoOculos() { overlayOculos.style.display = 'none'; }
-    function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
-    function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
-
-    // --- SCRIPT DE DECORAÇÃO DE FUNDO (não clicáveis) ---
-    window.addEventListener('load', function() {
-      const container = document.getElementById('decoracao-fundo-container');
-      if (!container) return;
-      
-      const emojis = ['✈️', '🥤', '🍦', '💘', '✨', '💕', '🥰']; // Apenas os não clicáveis
-      const totalEmojis = 40;
-      const gridSize = 150;
-
-      setTimeout(() => {
-        const pageHeight = document.body.scrollHeight;
-        const pageWidth = window.innerWidth;
-        const numCols = Math.floor
+    function fecharSegredo() { overlay
