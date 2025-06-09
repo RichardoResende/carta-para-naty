@@ -23,7 +23,7 @@
       z-index: 2;
     }
     h1 {
-      position: relative; /* Necessário para posicionar o coração dentro dele */
+      position: relative;
     }
     img {
       width: 100%;
@@ -123,7 +123,7 @@
   </div>
   
   <div class="main-container">
-    <h1>Feliz Dia <span class="easter-egg" style="top: -20px; left: 46%; transform: rotate(-15deg);" onclick="mostrarSegredoCoracao()">💖</span> dos Namorados, Naty 💘</h1>
+    <h1>Feliz Dia <span class="easter-egg" style="top: -20px; left: calc(46% + 40px); transform: rotate(-15deg);" onclick="mostrarSegredoCoracao()">💖</span> dos Namorados, Naty 💘</h1>
     
     <div class="music-player">
       <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
@@ -138,7 +138,7 @@
       <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
       
       <div class="espaco-easter-egg">
-        <span class="easter-egg" style="top: 50%; right: -25px; transform: translateY(-50%) rotate(20deg);" onclick="mostrarSegredoCarro()">🚗</span>
+        <span class="easter-egg" style="top: 50%; right: 15px; transform: translateY(calc(-50% - 10px)) rotate(20deg);" onclick="mostrarSegredoCarro()">🚗</span>
       </div>
 
       <p>É nosso segundo dias dos namorados junto, só que esse é diferente... é especial pra mim, dessa vez sem preocupações, apenas curtir essa data especial da gente.</p>
@@ -147,7 +147,7 @@
     </div>
 
     <div class="espaco-easter-egg">
-      <span class="easter-egg" style="top: 50%; left: 20%; transform: translateY(-50%) rotate(30deg);" onclick="mostrarSegredoOculos()">😎</span>
+      <span class="easter-egg" style="top: 50%; left: 20%; transform: translateY(calc(-50% - 15px)) rotate(30deg);" onclick="mostrarSegredoOculos()">😎</span>
     </div>
 
   </div>
