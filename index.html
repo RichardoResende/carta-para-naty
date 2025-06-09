@@ -14,12 +14,13 @@
       position: relative; 
       overflow-x: hidden;
     }
+    /* Container principal para o conteúdo */
     .main-container {
       max-width: 650px;
       margin: 0 auto;
       padding: 0 1em;
       position: relative;
-      background-color: lightpink; /* Fundo para cobrir emojis que caem atrás do texto */
+      background-color: lightpink; /* Garante que emojis não apareçam por trás do texto */
       z-index: 2;
     }
     img {
@@ -80,7 +81,7 @@
     .decoracao-fundo {
       position: absolute;
       color: rgba(255, 255, 255, 0.5);
-      z-index: 1; /* Fica acima do fundo, mas abaixo do conteúdo */
+      z-index: 1;
       user-select: none;
       cursor: default;
     }
@@ -89,7 +90,7 @@
       font-size: 2.5em !important;
       cursor: pointer !important;
       animation: pulse 2s infinite ease-in-out;
-      z-index: 3; /* Fica acima do conteúdo principal */
+      z-index: 3; /* Easter eggs ficam acima do conteúdo */
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -104,15 +105,12 @@
   
   <div class="main-container">
     <h1>Feliz Dia dos Namorados, Naty 💘</h1>
-
     <div class="music-player">
       <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
       <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
       <span class="music-title">Só me ligar</span>
     </div>
-
     <img src="foto1.jpg" alt="Foto do casal">
-
     <div class="texto">
       <p>Olha, não sou tão bom com cartas como você, mas pelo menos no computador acho que desenrolo o suficiente pra te fazer isso.</p>
       <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
@@ -122,25 +120,11 @@
     </div>
   </div>
 
-  <audio id="musica-de-fundo" loop>
-    <source src="musica.mp3" type="audio/mpeg">
-  </audio>
-
-  <div id="overlay-background" onclick="fecharSegredo()">
-    <img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()">
-  </div>
-
-  <div id="overlay-carro" onclick="fecharSegredoCarro()">
-    <img id="imagem-carro-secreta" src="viagem.jpg" alt="Surpresa do Carro" onclick="event.stopPropagation()">
-  </div>
-
-  <div id="overlay-oculos" onclick="fecharSegredoOculos()">
-    <img id="imagem-oculos-secreta" src="eu.jpg" alt="Minha Foto" onclick="event.stopPropagation()">
-  </div>
-  
-  <div id="overlay-coracao" onclick="fecharSegredoCoracao()">
-    <img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()">
-  </div>
+  <audio id="musica-de-fundo" loop><source src="musica.mp3" type="audio/mpeg"></audio>
+  <div id="overlay-background" onclick="fecharSegredo()"><img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()"></div>
+  <div id="overlay-carro" onclick="fecharSegredoCarro()"><img id="imagem-carro-secreta" src="viagem.jpg" alt="Surpresa do Carro" onclick="event.stopPropagation()"></div>
+  <div id="overlay-oculos" onclick="fecharSegredoOculos()"><img id="imagem-oculos-secreta" src="eu.jpg" alt="Minha Foto" onclick="event.stopPropagation()"></div>
+  <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
 
   <script>
     // --- Funções de controle, sem alterações ---
@@ -151,7 +135,6 @@
     const overlayCarro = document.getElementById('overlay-carro');
     const overlayOculos = document.getElementById('overlay-oculos');
     const overlayCoracao = document.getElementById('overlay-coracao');
-
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
@@ -163,33 +146,32 @@
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
 
-    // --- SCRIPT DE DECORAÇÃO (VERSÃO FINAL, ROBUSTA E RESPONSIVA) ---
+    // --- SCRIPT DE DECORAÇÃO (VERSÃO FINAL E RESPONSIVA) ---
     window.addEventListener('load', function() {
       const container = document.getElementById('decoracao-container');
       const mainContent = document.querySelector('.main-container');
+      if (!mainContent) return;
       
       const emojis = ['💖', '✈️', '🚗', '🥤', '🍦', '💘', '✨', '💕', '🥰', '😎'];
       const totalEmojisToPlace = 50;
-      const easterEggConfig = {
-        '🚗': mostrarSegredoCarro, '😎': mostrarSegredoOculos, '💖': mostrarSegredoCoracao
-      };
+      const easterEggConfig = { '🚗': mostrarSegredoCarro, '😎': mostrarSegredoOculos, '💖': mostrarSegredoCoracao };
       
       setTimeout(() => {
         const contentRect = mainContent.getBoundingClientRect();
         const contentLeft = contentRect.left;
         const contentRight = contentRect.right;
         const pageHeight = document.body.scrollHeight;
-        const safetyMargin = 15; // Margem extra para não ficar colado no texto
+        const safetyMargin = 20; // Aumentei a margem de segurança
 
-        let easterEggsPlaced = { '🚗': false, '😎': false, '💖': false };
+        let easterEggsPlaced = {};
 
         for (let i = 0; i < totalEmojisToPlace; i++) {
           let emoji;
           let isEasterEgg = false;
           
-          const easterEggsAvailable = Object.keys(easterEggConfig).filter(e => !easterEggsPlaced[e]);
-          if(easterEggsAvailable.length > 0) {
-            emoji = easterEggsAvailable[0];
+          const availableEasterEggs = Object.keys(easterEggConfig).filter(e => !easterEggsPlaced[e]);
+          if (availableEasterEggs.length > 0) {
+            emoji = availableEasterEggs[0];
             isEasterEgg = true;
           } else {
             emoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -205,6 +187,7 @@
             let randomLeft = Math.random() * window.innerWidth;
             let randomTop = Math.random() * pageHeight;
 
+            // Condição: SÓ coloca o emoji se ele estiver FORA da área de conteúdo
             if (randomLeft < contentLeft - safetyMargin || randomLeft > contentRight + safetyMargin) {
               emojiSpan.style.left = randomLeft + 'px';
               emojiSpan.style.top = randomTop + 'px';
