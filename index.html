@@ -9,23 +9,21 @@
       background-color: lightpink;
       font-family: 'Segoe UI', sans-serif;
       text-align: center;
-      padding: 2em 0; /* Apenas padding vertical no body */
+      padding: 2em 0; 
       color: #333;
       position: relative; 
       overflow-x: hidden;
     }
-
-    /* MUDANÇA: Container principal para o conteúdo */
     .main-container {
-      max-width: 650px; /* Largura máxima do conteúdo */
-      margin: 0 auto; /* Centraliza o container */
-      padding: 0 1em; /* Espaçamento interno para telas pequenas */
-      position: relative; /* Contexto para o z-index dos easter eggs */
-      z-index: 2; /* Garante que o conteúdo fique acima do fundo */
+      max-width: 650px;
+      margin: 0 auto;
+      padding: 0 1em;
+      position: relative;
+      background-color: lightpink; /* Fundo para cobrir emojis que caem atrás do texto */
+      z-index: 2;
     }
-
     img {
-      width: 100%; /* Imagem ocupa 100% do seu container */
+      width: 100%;
       max-width: 400px;
       border-radius: 20px;
       margin-top: 1em;
@@ -82,7 +80,7 @@
     .decoracao-fundo {
       position: absolute;
       color: rgba(255, 255, 255, 0.5);
-      z-index: 1;
+      z-index: 1; /* Fica acima do fundo, mas abaixo do conteúdo */
       user-select: none;
       cursor: default;
     }
@@ -91,7 +89,7 @@
       font-size: 2.5em !important;
       cursor: pointer !important;
       animation: pulse 2s infinite ease-in-out;
-      z-index: 3; /* Easter eggs ficam acima da decoração, mas abaixo dos overlays */
+      z-index: 3; /* Fica acima do conteúdo principal */
     }
     @keyframes pulse {
       0% { transform: scale(1); }
@@ -145,6 +143,7 @@
   </div>
 
   <script>
+    // --- Funções de controle, sem alterações ---
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -164,7 +163,7 @@
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
 
-    // --- SCRIPT DE DECORAÇÃO (VERSÃO RESPONSIVA) ---
+    // --- SCRIPT DE DECORAÇÃO (VERSÃO FINAL, ROBUSTA E RESPONSIVA) ---
     window.addEventListener('load', function() {
       const container = document.getElementById('decoracao-container');
       const mainContent = document.querySelector('.main-container');
@@ -176,24 +175,21 @@
       };
       
       setTimeout(() => {
-        const totalHeight = document.body.scrollHeight;
-        const totalWidth = window.innerWidth;
-        
-        // Define a "zona proibida" no centro da tela onde os emojis não podem cair
-        const contentLeft = mainContent.offsetLeft;
-        const contentRight = mainContent.offsetLeft + mainContent.offsetWidth;
-        const safetyMargin = 30; // Margem de segurança extra
+        const contentRect = mainContent.getBoundingClientRect();
+        const contentLeft = contentRect.left;
+        const contentRight = contentRect.right;
+        const pageHeight = document.body.scrollHeight;
+        const safetyMargin = 15; // Margem extra para não ficar colado no texto
 
-        // Lista para garantir que todos os easter eggs apareçam
-        const easterEggsToPlace = Object.keys(easterEggConfig);
+        let easterEggsPlaced = { '🚗': false, '😎': false, '💖': false };
 
         for (let i = 0; i < totalEmojisToPlace; i++) {
           let emoji;
           let isEasterEgg = false;
           
-          // Garante que os easter eggs sejam colocados primeiro
-          if (i < easterEggsToPlace.length) {
-            emoji = easterEggsToPlace[i];
+          const easterEggsAvailable = Object.keys(easterEggConfig).filter(e => !easterEggsPlaced[e]);
+          if(easterEggsAvailable.length > 0) {
+            emoji = easterEggsAvailable[0];
             isEasterEgg = true;
           } else {
             emoji = emojis[Math.floor(Math.random() * emojis.length)];
@@ -202,15 +198,13 @@
           const emojiSpan = document.createElement('span');
           emojiSpan.classList.add('decoracao-fundo');
           emojiSpan.innerText = emoji;
-
-          // Tenta encontrar uma posição válida fora da área de conteúdo
+          
           let placed = false;
           let attempts = 0;
           while(!placed && attempts < 100) {
-            const randomLeft = Math.random() * totalWidth;
-            const randomTop = Math.random() * totalHeight;
+            let randomLeft = Math.random() * window.innerWidth;
+            let randomTop = Math.random() * pageHeight;
 
-            // Condição: SÓ coloca o emoji se ele estiver FORA da área de conteúdo
             if (randomLeft < contentLeft - safetyMargin || randomLeft > contentRight + safetyMargin) {
               emojiSpan.style.left = randomLeft + 'px';
               emojiSpan.style.top = randomTop + 'px';
@@ -218,12 +212,12 @@
             }
             attempts++;
           }
-
-          // Se encontrou uma posição válida, adiciona o emoji
+          
           if(placed) {
             if (isEasterEgg) {
               emojiSpan.classList.add('easter-egg');
               emojiSpan.onclick = easterEggConfig[emoji];
+              easterEggsPlaced[emoji] = true;
             } else {
               emojiSpan.style.opacity = Math.random() * 0.4 + 0.2;
             }
