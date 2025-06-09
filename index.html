@@ -1,155 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carta para Naty 💖</title>
-  <style>
-    body {
-      background-color: lightpink;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 2em 0; 
-      color: #333;
-      position: relative; 
-      overflow-x: hidden;
-    }
-    .main-container {
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 0 1.5em;
-      position: relative;
-      background-color: lightpink;
-      z-index: 2;
-    }
-    img {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 20px;
-      margin-top: 1em;
-    }
-    .texto {
-      margin: 1em auto;
-      width: 100%;
-      font-size: 1.2em;
-      text-align: left;
-    }
-    #data-secreta {
-      color: #aa00aa;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    #overlay-background, #overlay-carro, #overlay-oculos, #overlay-coracao {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 10;
-      justify-content: center;
-      align-items: center;
-    }
-    #imagem-secreta, #imagem-carro-secreta, #imagem-oculos-secreta, #imagem-coracao-secreta {
-      width: 80%; max-width: 500px;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-      background-color: white;
-      padding: 15px;
-    }
-    .music-player {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      margin-top: 1.5em;
-      margin-bottom: 1em;
-    }
-    .music-control {
-      background: none; border: none; font-size: 2.5em; cursor: pointer; padding: 0; line-height: 1;
-    }
-    .music-title {
-      font-size: 1.2em; font-weight: bold; color: #333;
-    }
-    
-    /* MUDANÇA: Nova abordagem 100% CSS para decoração */
-    .decoracao-fundo-container {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 1;
-      pointer-events: none; /* Garante que os emojis de fundo não interfiram com cliques */
-    }
-    .fundo-emoji {
-      position: absolute;
-      color: white;
-      opacity: 0.8; /* Opacidade alta como pedido */
-    }
-    .espaco-easter-egg {
-      position: relative;
-      width: 100%;
-      height: 70px;
-      margin: 0.5em 0;
-    }
-    .easter-egg {
-      position: absolute;
-      font-size: 2.5em !important;
-      cursor: pointer !important;
-      animation: pulsar 2s infinite ease-in-out;
-      z-index: 3;
-      pointer-events: auto; /* Permite que os easter eggs sejam clicáveis */
-    }
-    @keyframes pulsar {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-  </style>
-</head>
-<body>
+<script>
+    alert('SCRIPT INICIADO');
 
-  <div class="decoracao-fundo-container">
-      <span class="fundo-emoji" style="top: 10%; left: 5%; font-size: 2em; transform: rotate(-15deg);">✈️</span>
-      <span class="fundo-emoji" style="top: 15%; right: 10%; font-size: 1.5em; transform: rotate(20deg);">✨</span>
-      <span class="fundo-emoji" style="top: 30%; left: 12%; font-size: 2.2em; transform: rotate(10deg);">💕</span>
-      <span class="fundo-emoji" style="top: 45%; right: 5%; font-size: 1.8em; transform: rotate(-25deg);">🍦</span>
-      <span class="fundo-emoji" style="top: 60%; left: 8%; font-size: 2.5em; transform: rotate(5deg);">💘</span>
-      <span class="fundo-emoji" style="top: 75%; right: 12%; font-size: 1.7em; transform: rotate(15deg);">🥤</span>
-      <span class="fundo-emoji" style="top: 90%; left: 15%; font-size: 2.1em; transform: rotate(-5deg);">🥰</span>
-      </div>
-  
-  <div class="main-container">
-    <h1>Feliz Dia dos Namorados, Naty 💘</h1>
-    <div class="music-player">
-      <button id="play-btn" class="music-control" onclick="tocarMusica()">▶️</button>
-      <button id="pause-btn" class="music-control" style="display:none;" onclick="pausarMusica()">⏸️</button>
-      <span class="music-title">Só me ligar</span>
-    </div>
-
-    <div class="espaco-easter-egg">
-      <span class="easter-egg" style="top: 15%; left: 50%; transform: translateX(-50%);" onclick="mostrarSegredoCoracao()">💖</span>
-    </div>
-    <img src="foto1.jpg" alt="Foto do casal">
-    <div class="espaco-easter-egg">
-       <span class="easter-egg" style="top: 25%; left: 15%;" onclick="mostrarSegredoCarro()">🚗</span>
-       <span class="easter-egg" style="top: 25%; right: 15%;" onclick="mostrarSegredoOculos()">😎</span>
-    </div>
-
-    <div class="texto">
-      <p>Olha, não sou tão bom com cartas como você, mas pelo menos no computador acho que desenrolo o suficiente pra te fazer isso.</p>
-      <p>Queria te dizer que você é muito especial pra mim. É alguém que me faz dormir em paz, sabendo que vai estar sempre ao meu lado, comigo, me protegendo.</p>
-      <p>É nosso segundo dias dos namorados junto, só que esse é diferente... é especial pra mim, dessa vez sem preocupações, apenas curtir essa data especial da gente.</p>
-      <p>Jájá faz um ano né desde daquele dia, <span id="data-secreta" onclick="revelarSegredo()">11/06/2024</span>, lembra desse dia, espero que sim, o dia que tudo mudou, o que será que seria da gnt se não fosse aquele dia, de toda forma, gosto da realidade que vivemos, gosto de você, eu te amo e saiba</p>
-      <p>Você é insubstituível meu amor. 💖</p>
-    </div>
-  </div>
-
-  <audio id="musica-de-fundo" loop><source src="musica.mp3" type="audio/mpeg"></audio>
-  <div id="overlay-background" onclick="fecharSegredo()"><img id="imagem-secreta" src="foto2.jpg" alt="Surpresa" onclick="event.stopPropagation()"></div>
-  <div id="overlay-carro" onclick="fecharSegredoCarro()"><img id="imagem-carro-secreta" src="viagem.jpg" alt="Surpresa do Carro" onclick="event.stopPropagation()"></div>
-  <div id="overlay-oculos" onclick="fecharSegredoOculos()"><img id="imagem-oculos-secreta" src="eu.jpg" alt="Minha Foto" onclick="event.stopPropagation()"></div>
-  <div id="overlay-coracao" onclick="fecharSegredoCoracao()"><img id="imagem-coracao-secreta" src="amor.jpg" alt="Surpresa do Coração" onclick="event.stopPropagation()"></div>
-
-  <script>
-    // MUDANÇA: SCRIPT TOTALMENTE SIMPLIFICADO. SEM GERAÇÃO DE EMOJIS.
+    // --- Declaração de Variáveis ---
     const musica = document.getElementById('musica-de-fundo');
     const botaoPlay = document.getElementById('play-btn');
     const botaoPause = document.getElementById('pause-btn');
@@ -157,7 +9,10 @@
     const overlayCarro = document.getElementById('overlay-carro');
     const overlayOculos = document.getElementById('overlay-oculos');
     const overlayCoracao = document.getElementById('overlay-coracao');
+    
+    alert('VARIÁVEIS DECLARADAS');
 
+    // --- Definição das Funções ---
     function tocarMusica() { musica.play(); botaoPlay.style.display = 'none'; botaoPause.style.display = 'inline-block'; }
     function pausarMusica() { musica.pause(); botaoPause.style.display = 'none'; botaoPlay.style.display = 'inline-block'; }
     function revelarSegredo() { overlay.style.display = 'flex'; }
@@ -168,7 +23,42 @@
     function fecharSegredoOculos() { overlayOculos.style.display = 'none'; }
     function mostrarSegredoCoracao() { overlayCoracao.style.display = 'flex'; }
     function fecharSegredoCoracao() { overlayCoracao.style.display = 'none'; }
-  </script>
 
-</body>
-</html>
+    alert('FUNÇÕES DEFINIDAS');
+
+    // --- Script de Decoração ---
+    window.addEventListener('load', function() {
+      alert('EVENTO "LOAD" DA PÁGINA DISPARADO');
+      
+      const container = document.getElementById('decoracao-fundo-container');
+      if (!container) {
+          alert('ERRO: Container da decoração não encontrado!');
+          return;
+      }
+      
+      const emojis = ['✈️', '🥤', '🍦', '💘', '✨', '💕', '🥰']; 
+      const totalEmojis = 40;
+
+      alert('INICIANDO CRIAÇÃO DOS EMOJIS DE FUNDO');
+
+      setTimeout(() => {
+        alert('DENTRO DO SETTIMEOUT - VAI COMEÇAR A GERAR');
+        const pageHeight = document.body.scrollHeight;
+        const pageWidth = window.innerWidth;
+        for (let i = 0; i < totalEmojis; i++) {
+          const emojiSpan = document.createElement('span');
+          emojiSpan.classList.add('decoracao-fundo');
+          emojiSpan.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+          
+          emojiSpan.style.top = (Math.random() * pageHeight) + 'px';
+          emojiSpan.style.left = (Math.random() * pageWidth) + 'px';
+          emojiSpan.style.fontSize = (Math.random() * 1.5 + 0.8) + 'em';
+          emojiSpan.style.transform = `rotate(${(Math.random() - 0.5) * 60}deg)`;
+          emojiSpan.style.animationDelay = (Math.random() * -10) + 's';
+          
+          container.appendChild(emojiSpan);
+        }
+        alert('SCRIPT FINALIZADO COM SUCESSO!');
+      }, 100);
+    });
+  </script>
